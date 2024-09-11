@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Shirt Order Form</title>
+</head>
+<body>
+    <h1>Customize Your T-Shirt Order</h1>
+    <form action="/submit-order" method="post">
+        <!-- Tagline -->
+        <fieldset>
+            <legend>Tagline on the Shirt</legend>
+            <label for="tagline">Enter your tagline:</label>
+            <input type="text" id="tagline" name="tagline" placeholder="Enter tagline here" required>
+        </fieldset>
+
+        <!-- Color Selection -->
+        <fieldset>
+            <legend>Color</legend>
+            <label for="color">Select T-shirt color:</label>
+            <select id="color" name="color" required>
+                <option value="">--Please choose a color--</option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="black">Black</option>
+                <option value="white">White</option>
+            </select>
+        </fieldset>
+
+        <!-- Size Selection -->
+        <fieldset>
+            <legend>Size</legend>
+            <label for="size">Select T-shirt size:</label>
+            <select id="size" name="size" required>
+                <option value="">--Please choose a size--</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="xlarge">Extra Large</option>
+            </select>
+        </fieldset>
+
+        <!-- Quantity -->
+        <fieldset>
+            <legend>Quantity</legend>
+            <label for="quantity">Number of T-shirts:</label>
+            <input type="number" id="quantity" name="quantity" min="1" max="100" required>
+        </fieldset>
+
+        <!-- Delivery Date -->
+        <fieldset>
+            <legend>Delivery Date</legend>
+            <label for="delivery-date">Select delivery date:</label>
+            <input type="date" id="delivery-date" name="delivery-date" required>
+        </fieldset>
+
+        <!-- Delivery Details -->
+        <fieldset>
+            <legend>Delivery Details</legend>
+            <label for="recipient-name">Recipient's Name:</label>
+            <input type="text" id="recipient-name" name="recipient-name" placeholder="Full name" required>
+            <br>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" placeholder="Street address, City, ZIP code" required>
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="example@example.com" required>
+            <br>
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+        </fieldset>
+
+        <!-- Additional Comments -->
+        <fieldset>
+            <legend>Additional Comments</legend>
+            <label for="comments">Any additional comments or special instructions:</label>
+            <textarea id="comments" name="comments" rows="4" cols="50" placeholder="Enter comments here"></textarea>
+        </fieldset>
+
+        <!-- Buttons -->
+        <fieldset>
+            <button type="submit">Submit Order</button>
+            <button type="reset">Reset Form</button>
+        </fieldset>
+    </form>
+</body>
+</html>
