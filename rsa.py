@@ -1,24 +1,64 @@
-#pip install pycryptodome
-from Crypto.PublicKey import RSA
-from Crypto.Cipher import PKCS1_OAEP
-from Crypto.Random import get_random_bytes
+import random
+from sympy import isprime, mod_inverse
 
-# RSA Key Generation
-key = RSA.generate(2048)  # Generate a 2048-bit RSA key pair
-private_key = key.export_key()
-public_key = key.publickey().export_key()
+# Generate a random prime number
+def generate_prime():
+    while True:
+        num = random.randint(100, 200)
+        if isprime(num):
+            return num
 
-# Print public and private keys
-print("Public Key:", public_key.decode())
-print("Private Key:", private_key.decode())
+# Generate RSA keys
+def generate_keys():
+    p = generate_prime()
+    q = generate_prime()
+    
+    n = p * q
+    phi = (p - 1) * (q - 1)
 
-# Encryption
-cipher_rsa = PKCS1_OAEP.new(key.publickey())  # PKCS1_OAEP is the padding scheme used
-message = b'This is a secret message!'
-ciphertext = cipher_rsa.encrypt(message)
-print("Ciphertext:", ciphertext)
+    # Choose e
+    e = 3
+    while e < phi:
+        if gcd(e, phi) == 1:
+            break
+        e += 2
 
-# Decryption
-cipher_rsa = PKCS1_OAEP.new(key)
-decrypted_message = cipher_rsa.decrypt(ciphertext)
-print("Decrypted message:", decrypted_message)
+    # Calculate d
+    d = mod_inverse(e, phi)
+
+    return (e, n), (d, n)  # Public key (e, n), Private key (d, n)
+
+# Compute gcd
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+# Encrypt a message
+def encrypt_message(public_key, plaintext):
+    e, n = public_key
+    encrypted = [pow(ord(char), e, n) for char in plaintext]
+    return encrypted
+
+# Decrypt a message
+def decrypt_message(private_key, ciphertext):
+    d, n = private_key
+    decrypted = ''.join(chr(pow(char, d, n)) for char in ciphertext)
+    return decrypted
+
+# Example usage
+if __name__ == "__main__":
+    # Generate keys
+    public_key, private_key = generate_keys()
+
+    # Sample message
+    message = "HELLO"
+    
+    # Encrypt the message
+    encrypted_message = encrypt_message(public_key, message)
+    print("Encrypted message:", encrypted_message)
+
+    # Decrypt the message
+    decrypted_message = decrypt_message(private_key, encrypted_message)
+    print("Decrypted message:", decrypted_message)
+  
